@@ -32,7 +32,9 @@ def run_benchmark(model_id="Qwen/Qwen3-VL-2B-Instruct", machine="DeepLearning2")
     image_count = 0
 
     # prompt = "Do you see someone fishing in the image? Answer only 'yes' or 'no'."
-    
+    # prompt = "Describe this image concisely (maximum 2 sentences). - If fishing-related elements are present (e.g., anglers, rods, boats, fish, gear, waterbodies), focus your description primarily on those elements. - If the image does not contain any fishing context, provide a brief, objective description of the scene. Do not mention or imply fishing if it is not explicitly depicted."
+    prompt = "Which of the following activities describe better what it is happening in the image? a) Fishing b) Reading c) Not Fishing d)Running. Answer only with the letter of the most correct option."
+
     try:
         for img_path in base_folder.rglob("*"):
                     if img_path.is_file() and img_path.suffix.lower() in extensions:
@@ -45,10 +47,10 @@ def run_benchmark(model_id="Qwen/Qwen3-VL-2B-Instruct", machine="DeepLearning2")
                             start_time = time.time()
                             
                             if machine == "Orin":
-                                caption = controller.image_inference(img, model_id)
+                                caption = controller.image_inference(img, model_id, prompt)
     
                             elif machine == "DeepLearning2":
-                                caption = get_remote_caption(img, model_id, machine)
+                                caption = get_remote_caption(img, model_id, machine, prompt)
                                 
                             if isinstance(caption, dict) and "caption" in caption:
                                 caption = caption["caption"]
@@ -62,7 +64,9 @@ def run_benchmark(model_id="Qwen/Qwen3-VL-2B-Instruct", machine="DeepLearning2")
                                 is_fishing_pred = 1 if "a person of fishing" in caption else 0
                             else:
                                 eval_result = fishing_evaluation(caption)
-                                is_fishing_pred = 1 if eval_result == "Fishing" else 0 #caption.startswith("yes") or "yes" in f" {caption} " else 0
+                                # is_fishing_pred = 1 if eval_result == "Fishing" else 0 
+                                # is_fishing_pred = 1 if caption.startswith("yes") or "yes" in f" {caption} " else 0
+                                is_fishing_pred = 1 if  "Fishing" in caption or "a)" in caption else 0
                             
                             proc_time = time.time() - start_time
                             
@@ -100,7 +104,7 @@ def run_benchmark(model_id="Qwen/Qwen3-VL-2B-Instruct", machine="DeepLearning2")
         avg_time = total_time / image_count
         macro_f1 = f1_score(y_true, y_pred, average='macro', zero_division=0)
         
-        summary_csv = f"codigo/metrics/{machine}/model_performance_summary.csv"
+        summary_csv = f"codigo/metrics/{machine}/model_performance_summary_multiple.csv"
         summary_data = pd.DataFrame({
             "Model": [model_id],
             "Machine": [machine],
@@ -135,6 +139,6 @@ if __name__ == "__main__":
         sys.exit(1)
         
     selected_model = sys.argv[1]
-    selected_machine = sys.argv[2] if len(sys.argv) > 2 else "Orin"
+    selected_machine = sys.argv[2] if len(sys.argv) > 2 else "DeepLearning2"
     
     run_benchmark(selected_model, selected_machine)
