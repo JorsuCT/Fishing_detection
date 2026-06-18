@@ -11,7 +11,7 @@
 ## Project Overview
 This repository contains the codebase for my Bachelor's Thesis (Trabajo de Fin de Título). The project explores the capabilities of state-of-the-art Vision-Language Models (VLMs) for detecting fishing activities in images. 
 
-The system evaluates multiple architectures (such as Qwen-VL, BLIP-2, InstructBLIP, CLIP, Moondream, etc.) and compares their performance regarding accuracy (F1-Score) and inference speed (Average Time per Image). The objective is to determine the most efficient model and prompting strategy for deployment, specifically targeting NVIDIA Jetson edge devices.
+The system evaluates multiple architectures (such as Qwen-VL, BLIP-2, InstructBLIP, CLIP, etc.) and compares their performance regarding accuracy (F1-Score) and inference speed (Average Time per Image). The objective is to determine the most efficient model and prompting strategy for deployment, specifically targeting NVIDIA Jetson edge devices.
 
 ## System Architecture: Why a Client-Server Split?
 Instead of a monolithic script, this project is deliberately divided into a decoupled Client-Server architecture (`/local` and `/server`). This design decision addresses several critical engineering challenges associated with large AI models:
