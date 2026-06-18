@@ -7,9 +7,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CONFIG = {
-    "deep_learning": {
+    "DeepLearning2": {
         "url": os.getenv("DEEPLEARNING_IP"),
-        "timeout": 120
+        "timeout": 300
     }
 }
 

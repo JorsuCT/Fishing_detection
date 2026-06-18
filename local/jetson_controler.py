@@ -1,3 +1,4 @@
+from ast import If
 import os
 import time
 import requests
@@ -107,7 +108,7 @@ class JetsonController:
         finally:
             ssh.close()
 
-    def image_inference(self, image, model, prompt="Describe the image."):
+    def image_inference(self, image, model, prompt="Describe this image."):
         """Converts the image to base64 and makes a request to the vLLM API."""
         
         buffered = io.BytesIO()
