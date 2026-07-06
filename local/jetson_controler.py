@@ -108,7 +108,7 @@ class JetsonController:
         finally:
             ssh.close()
 
-    def image_inference(self, image, model, prompt="Describe this image."):
+    def image_inference(self, image, model, prompt="Do you see someone fishing in the image? Answer only 'yes' or 'no'."):
         """Converts the image to base64 and makes a request to the vLLM API."""
         
         buffered = io.BytesIO()

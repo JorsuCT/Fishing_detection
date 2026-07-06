@@ -13,7 +13,7 @@ CONFIG = {
     }
 }
 
-def get_remote_caption(image, model_id, machine, prompt="Describe the image."):
+def get_remote_caption(image, model_id, machine, prompt="Describe this image concisely (maximum 2 sentences). - If fishing-related elements are present (e.g., anglers, rods, boats, fish, gear, waterbodies), focus your description primarily on those elements. - If the image does not contain any fishing context, provide a brief, objective description of the scene. Do not mention or imply fishing if it is not explicitly depicted."):
     conf = CONFIG.get(machine)
     if not conf:
         print(f"[ERROR] Machine {machine} not found in the configuration.")

@@ -4,7 +4,7 @@ from server_controler import get_remote_caption
 from jetson_controler import JetsonController
 from evaluation import evaluation
 
-def main(image, model_id="Qwen/Qwen3-VL-2B-Instruct", machine="DeepLearning2"):
+def main(image, model_id="openai/clip-vit-large-patch14", machine="DeepLearning2"):
     """Main function that orchestrates the entire process:"""
 
     if machine == "Orin":
@@ -39,7 +39,7 @@ if __name__ == "__main__":
 
     path = sys.argv[1]
     
-    selected_model = sys.argv[2] if len(sys.argv) > 2 else "google/gemma-4-E2B-it"
-    selected_machine = sys.argv[3] if len(sys.argv) > 3 else "Orin"
+    selected_model = sys.argv[2] if len(sys.argv) > 2 else "openai/clip-vit-large-patch14"
+    selected_machine = sys.argv[3] if len(sys.argv) > 3 else "DeepLearning2"
 
     main(path, selected_model, selected_machine)
